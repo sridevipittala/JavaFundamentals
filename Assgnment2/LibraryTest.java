@@ -58,8 +58,11 @@ class Library{
 	int bookCount=0;
 
 	void addBook(Book b){
-		books[bookCount++]=b;
-
+		if(bookCount<15){
+			books[bookCount++]=b;
+		}else{
+			System.out.println("Library is full");
+		}
 	}
 
 	Book findByTitle(String title){
@@ -89,10 +92,15 @@ class Library{
 	}
 	void issueBook(String title){
 		//: Marks the book as issued if it is available.
+		Book book=findByTitle(title);
+		book.isIssued=true;
 	}
+	
 	void returnBook(String title){
-
+		Book book=findByTitle(title);
+		book.isIssued=false;
 	}
+
 	void  displayAllBooks(){
 		for(Book book:books){
 			if(book!=null)
@@ -101,7 +109,15 @@ class Library{
 
 	}
 	int countAvailable(){
-		return  0;
+		int availableCnt=0;
+		for(Book book:books){
+			if(book!=null)
+			{
+				if(!book.isIssued)
+					availableCnt;
+			}
+		}
+		return  availableCnt;
 	}
 }
 class LibraryTest{
@@ -113,7 +129,13 @@ class LibraryTest{
 		lib.addBook(new Book("CCCC","xxx","PS132W","ggg3",false));
 		lib.addBook(new Book("DDDD","xxx","PS213W","ggg4",false));
 		lib.addBook(new Book("EEEE","yyy","PS113W","ggg5",false));
+		lib.addBook(new Book("FFFF","yyy","PS113W","ggg6",false));
 		lib.displayAllBooks();
+
+		lib.issueBook();
+		lib.issueBook();
+
+		lib.returnBook();
 
 		String findByTitle="CCCC1111";
 		Book foundByTitle=lib.findByTitle(findByTitle);
